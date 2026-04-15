@@ -19,7 +19,6 @@ export default function GlossaryPage() {
       )
     : sorted
 
-  // Group by first letter when not searching
   const grouped = useMemo(() => {
     if (search) return null
     const g = {}
@@ -35,8 +34,8 @@ export default function GlossaryPage() {
     <AppShell>
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">AI Glossary</h1>
-          <p className="text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">AI Glossary</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">
             {GLOSSARY.length} essential AI terms, explained clearly.
           </p>
         </div>
@@ -49,7 +48,7 @@ export default function GlossaryPage() {
             placeholder="Search terms..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-400 bg-white"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 text-sm focus:outline-none focus:border-brand-400 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
           />
         </div>
 
@@ -64,8 +63,8 @@ export default function GlossaryPage() {
                   href={hasTerms ? `#letter-${letter}` : undefined}
                   className={`w-7 h-7 flex items-center justify-center rounded text-xs font-bold transition-colors ${
                     hasTerms
-                      ? 'bg-brand-50 text-brand-700 hover:bg-brand-100'
-                      : 'bg-gray-50 text-gray-300 cursor-default'
+                      ? 'bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-400 hover:bg-brand-100 dark:hover:bg-brand-900/50'
+                      : 'bg-gray-50 dark:bg-gray-800 text-gray-300 dark:text-gray-600 cursor-default'
                   }`}
                 >
                   {letter}
@@ -79,13 +78,11 @@ export default function GlossaryPage() {
         {search ? (
           <div className="space-y-2">
             {filtered.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-12 text-gray-400 dark:text-gray-500">
                 <p className="text-4xl mb-3">🔍</p>
                 <p>No terms match "{search}"</p>
               </div>
-            ) : filtered.map(term => (
-              <TermCard key={term.id} term={term} />
-            ))}
+            ) : filtered.map(term => <TermCard key={term.id} term={term} />)}
           </div>
         ) : (
           <div className="space-y-8">
@@ -95,9 +92,9 @@ export default function GlossaryPage() {
               return (
                 <div key={letter} id={`letter-${letter}`}>
                   <div className="flex items-center gap-3 mb-3">
-                    <h2 className="text-2xl font-bold text-brand-600">{letter}</h2>
-                    <div className="flex-1 h-px bg-gray-100" />
-                    <span className="text-xs text-gray-400">{terms.length} terms</span>
+                    <h2 className="text-2xl font-bold text-brand-600 dark:text-brand-400">{letter}</h2>
+                    <div className="flex-1 h-px bg-gray-100 dark:bg-gray-800" />
+                    <span className="text-xs text-gray-400 dark:text-gray-500">{terms.length} terms</span>
                   </div>
                   <div className="space-y-2">
                     {terms.map(term => <TermCard key={term.id} term={term} />)}

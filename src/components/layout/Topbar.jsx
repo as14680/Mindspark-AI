@@ -8,13 +8,13 @@ export default function Topbar() {
   const level = getLevelFromXP(totalXP)
 
   return (
-    <header className="h-14 bg-white border-b border-gray-100 flex items-center justify-end px-6 gap-4 shrink-0">
+    <header className="h-14 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 flex items-center justify-end px-6 gap-4 shrink-0">
       {currentStreak > 0 && (
-        <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-sm font-medium">
+        <div className="flex items-center gap-1.5 bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-3 py-1 rounded-full text-sm font-medium">
           🔥 <span>{currentStreak} day streak</span>
         </div>
       )}
-      <div className="flex items-center gap-1.5 bg-gray-50 text-gray-600 px-3 py-1 rounded-full text-sm">
+      <div className="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-sm">
         🏅 <span>{badges.length} badges</span>
       </div>
       <div

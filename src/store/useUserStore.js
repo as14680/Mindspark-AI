@@ -8,6 +8,7 @@ const initialState = {
   displayName: 'Learner',
   joinedAt: new Date().toISOString(),
   totalXP: 0,
+  theme: 'light',
   badges: ['early-adopter'],
   lastActivityDate: null,
   currentStreak: 0,
@@ -31,6 +32,7 @@ export const useUserStore = create(
       ...initialState,
 
       setDisplayName: (name) => set({ displayName: name }),
+      toggleTheme: () => set(s => ({ theme: s.theme === 'dark' ? 'light' : 'dark' })),
 
       awardXP: (amount, label = '') => {
         const state = get()

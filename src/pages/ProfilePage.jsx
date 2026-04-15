@@ -11,13 +11,13 @@ export default function ProfilePage() {
     completedLessons, completedTopics, quizResults, joinedAt, resetProgress
   } = useUserStore()
 
-  const [editing, setEditing] = useState(false)
-  const [nameInput, setNameInput] = useState(displayName)
+  const [editing, setEditing]       = useState(false)
+  const [nameInput, setNameInput]   = useState(displayName)
   const [confirmReset, setConfirmReset] = useState(false)
 
-  const level = getLevelFromXP(totalXP)
+  const level    = getLevelFromXP(totalXP)
   const progress = getProgressToNextLevel(totalXP)
-  const xpLeft = getXPToNextLevel(totalXP)
+  const xpLeft   = getXPToNextLevel(totalXP)
 
   const handleSaveName = () => {
     if (nameInput.trim()) setDisplayName(nameInput.trim())
@@ -25,19 +25,15 @@ export default function ProfilePage() {
   }
 
   const handleReset = () => {
-    if (confirmReset) {
-      resetProgress()
-      setConfirmReset(false)
-    } else {
-      setConfirmReset(true)
-    }
+    if (confirmReset) { resetProgress(); setConfirmReset(false) }
+    else setConfirmReset(true)
   }
 
   return (
     <AppShell>
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Profile header */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 flex items-start gap-5">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-6 flex items-start gap-5">
           <div
             className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold text-white shrink-0"
             style={{ backgroundColor: level.color }}
@@ -50,19 +46,19 @@ export default function ProfilePage() {
                 <input
                   value={nameInput}
                   onChange={e => setNameInput(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-brand-400"
+                  className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-brand-400"
                   autoFocus
                 />
                 <button onClick={handleSaveName} className="bg-brand-600 text-white px-3 py-1.5 rounded-lg text-sm">Save</button>
-                <button onClick={() => setEditing(false)} className="text-gray-400 text-sm px-2">Cancel</button>
+                <button onClick={() => setEditing(false)} className="text-gray-400 dark:text-gray-500 text-sm px-2">Cancel</button>
               </div>
             ) : (
               <div className="flex items-center gap-2 mb-1">
-                <h2 className="text-xl font-bold text-gray-900">{displayName}</h2>
-                <button onClick={() => setEditing(true)} className="text-gray-400 hover:text-gray-600 text-xs">✏️</button>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">{displayName}</h2>
+                <button onClick={() => setEditing(true)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xs">✏️</button>
               </div>
             )}
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-400 dark:text-gray-500">
               Member since {new Date(joinedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </p>
             <div className="flex gap-3 mt-3">
@@ -77,18 +73,18 @@ export default function ProfilePage() {
         </div>
 
         {/* XP Bar */}
-        <div className="bg-white rounded-xl border border-gray-100 p-5">
+        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-5">
           <div className="flex justify-between mb-2">
-            <span className="text-sm font-semibold text-gray-700">XP Progress</span>
-            <span className="text-sm text-gray-400">{totalXP.toLocaleString()} total XP</span>
+            <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">XP Progress</span>
+            <span className="text-sm text-gray-400 dark:text-gray-500">{totalXP.toLocaleString()} total XP</span>
           </div>
-          <div className="h-3 bg-gray-100 rounded-full overflow-hidden mb-2">
+          <div className="h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden mb-2">
             <div
               className="h-full rounded-full transition-all duration-700"
               style={{ width: `${Math.round(progress * 100)}%`, backgroundColor: level.color }}
             />
           </div>
-          <div className="flex justify-between text-xs text-gray-400">
+          <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500">
             <span>Level {level.level}</span>
             {level.level < LEVELS.length
               ? <span>{xpLeft.toLocaleString()} XP to Level {level.level + 1}</span>
@@ -100,27 +96,27 @@ export default function ProfilePage() {
         {/* Stats grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: 'Total XP',      value: totalXP.toLocaleString(), icon: '⚡' },
-            { label: 'Current Streak',value: `${currentStreak}d`,      icon: '🔥' },
-            { label: 'Best Streak',   value: `${longestStreak}d`,      icon: '🏆' },
-            { label: 'Lessons Done',  value: Object.keys(completedLessons).length, icon: '✅' },
-            { label: 'Topics Done',   value: completedTopics.length,   icon: '📚' },
-            { label: 'Quizzes Done',  value: Object.keys(quizResults).length,      icon: '🎯' },
-            { label: 'Badges Earned', value: badges.length,            icon: '🎖️' },
-            { label: 'Level',         value: level.level,              icon: '🏅' },
+            { label: 'Total XP',       value: totalXP.toLocaleString(), icon: '⚡' },
+            { label: 'Current Streak', value: `${currentStreak}d`,      icon: '🔥' },
+            { label: 'Best Streak',    value: `${longestStreak}d`,       icon: '🏆' },
+            { label: 'Lessons Done',   value: Object.keys(completedLessons).length, icon: '✅' },
+            { label: 'Topics Done',    value: completedTopics.length,    icon: '📚' },
+            { label: 'Quizzes Done',   value: Object.keys(quizResults).length,      icon: '🎯' },
+            { label: 'Badges Earned',  value: badges.length,             icon: '🎖️' },
+            { label: 'Level',          value: level.level,               icon: '🏅' },
           ].map(({ label, value, icon }) => (
-            <div key={label} className="bg-white rounded-xl border border-gray-100 p-4 text-center">
+            <div key={label} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-4 text-center">
               <span className="text-2xl">{icon}</span>
-              <p className="font-bold text-gray-900 mt-1">{value}</p>
-              <p className="text-xs text-gray-400">{label}</p>
+              <p className="font-bold text-gray-900 dark:text-white mt-1">{value}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">{label}</p>
             </div>
           ))}
         </div>
 
         {/* Badges */}
-        <div className="bg-white rounded-xl border border-gray-100 p-5">
-          <h3 className="font-bold text-gray-900 mb-1">Badges</h3>
-          <p className="text-sm text-gray-400 mb-4">{badges.length} / {BADGES.length} unlocked</p>
+        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-5">
+          <h3 className="font-bold text-gray-900 dark:text-white mb-1">Badges</h3>
+          <p className="text-sm text-gray-400 dark:text-gray-500 mb-4">{badges.length} / {BADGES.length} unlocked</p>
           <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
             {BADGES.map(badge => (
               <BadgeCard key={badge.id} badge={badge} unlocked={badges.includes(badge.id)} />
@@ -130,21 +126,21 @@ export default function ProfilePage() {
 
         {/* Quiz history */}
         {Object.keys(quizResults).length > 0 && (
-          <div className="bg-white rounded-xl border border-gray-100 p-5">
-            <h3 className="font-bold text-gray-900 mb-4">Quiz History</h3>
+          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-5">
+            <h3 className="font-bold text-gray-900 dark:text-white mb-4">Quiz History</h3>
             <div className="space-y-2">
               {Object.entries(quizResults).map(([quizId, result]) => {
                 const topic = TOPICS.find(t => t.quizId === quizId)
                 return (
-                  <div key={quizId} className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
+                  <div key={quizId} className="flex items-center gap-3 py-2 border-b border-gray-50 dark:border-gray-800 last:border-0">
                     <span className="text-lg">{topic?.icon}</span>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-800">{topic?.title}</p>
-                      <p className="text-xs text-gray-400">{result.attempts} attempt{result.attempts > 1 ? 's' : ''}</p>
+                      <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{topic?.title}</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500">{result.attempts} attempt{result.attempts > 1 ? 's' : ''}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-bold text-gray-900">{Math.round(result.bestScore * 100)}%</p>
-                      <p className="text-xs text-gray-400">best</p>
+                      <p className="text-sm font-bold text-gray-900 dark:text-white">{Math.round(result.bestScore * 100)}%</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500">best</p>
                     </div>
                   </div>
                 )
@@ -154,24 +150,21 @@ export default function ProfilePage() {
         )}
 
         {/* Danger zone */}
-        <div className="bg-white rounded-xl border border-red-100 p-5">
-          <h3 className="font-bold text-red-700 mb-1">Danger Zone</h3>
-          <p className="text-sm text-gray-500 mb-4">Resetting your progress is permanent and cannot be undone.</p>
+        <div className="bg-white dark:bg-gray-900 rounded-xl border border-red-100 dark:border-red-900/40 p-5">
+          <h3 className="font-bold text-red-700 dark:text-red-400 mb-1">Danger Zone</h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Resetting your progress is permanent and cannot be undone.</p>
           <button
             onClick={handleReset}
             className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
               confirmReset
                 ? 'bg-red-600 text-white hover:bg-red-700'
-                : 'bg-red-50 text-red-600 hover:bg-red-100'
+                : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30'
             }`}
           >
             {confirmReset ? '⚠️ Click again to confirm reset' : '🗑️ Reset all progress'}
           </button>
           {confirmReset && (
-            <button
-              onClick={() => setConfirmReset(false)}
-              className="ml-3 text-sm text-gray-400 hover:text-gray-600"
-            >
+            <button onClick={() => setConfirmReset(false)} className="ml-3 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
               Cancel
             </button>
           )}

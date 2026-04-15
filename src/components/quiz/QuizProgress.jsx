@@ -14,7 +14,7 @@ export default function QuizProgress({ total, current, answers }) {
               answered === 'correct'   ? 'bg-green-400' :
               answered === 'incorrect' ? 'bg-red-400'   :
               isCurrent                ? 'bg-brand-400' :
-              'bg-gray-200'
+              'bg-gray-200 dark:bg-gray-700'
             )}
           />
         )
